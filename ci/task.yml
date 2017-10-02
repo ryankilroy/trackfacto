@@ -1,0 +1,6 @@
+---
+platform: linux
+inputs:
+- name: trackfacto
+run:
+  path: trackfacto/storycize.sh

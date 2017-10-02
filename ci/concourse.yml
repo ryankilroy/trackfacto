@@ -1,0 +1,28 @@
+resources:
+- name: friday-night
+  type: time
+  source:
+    interval: 1m
+    start: 11:57 PM
+    stop: 11:59 PM
+    days: [Friday]
+    location: Canada/Eastern
+- name: trackfacto
+  type: git
+  source:
+    uri: https://github.com/ryanmattcollins/trackfacto.git
+
+jobs:
+- name: action-items
+  plan:
+  - aggregate:
+    - get: friday-night
+      trigger: true
+    - get: trackfacto
+  - task: storycize
+    file: trackfacto/ci/task.yml
+    params:
+      PF_RETRO_NAME: ((PFRetroName))
+      PF_BEARER_TOKEN: ((PFBearerToken))
+      TRACKER_PROJECT_ID: ((TrackerProjectID))
+      TRACKER_API_TOKEN: ((TrackerApiToken))
