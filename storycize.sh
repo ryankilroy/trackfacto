@@ -2,10 +2,10 @@
 
 set -e
 
-[ -z "$PF_RETRO_NAME"] && echo 'Please set the retro name ($PF_RETRO_NAME)' && exit 1
-[ -z "$PF_BEARER_TOKEN"] && echo 'Please set the retro bearer token ($PF_BEARER_TOKEN)' && exit 1
-[ -z "$TRACKER_PROJECT_ID"] && echo 'Please set the tracker project id ($TRACKER_PROJECT_ID)' && exit 1
-[ -z "$TRACKER_API_TOKEN"] && echo 'Please set the retro name ($TRACKER_API_TOKEN)' && exit 1
+[ -z "$PF_RETRO_NAME" ] && echo 'Please set the retro name ($PF_RETRO_NAME)' && exit 1
+[ -z "$PF_BEARER_TOKEN" ] && echo 'Please set the retro bearer token ($PF_BEARER_TOKEN)' && exit 1
+[ -z "$TRACKER_PROJECT_ID" ] && echo 'Please set the tracker project id ($TRACKER_PROJECT_ID)' && exit 1
+[ -z "$TRACKER_API_TOKEN" ] && echo 'Please set the retro name ($TRACKER_API_TOKEN)' && exit 1
 
 items=$(curl "https://retro-api.cfapps.io/retros/$PF_RETRO_NAME" -H "authorization: Bearer $PF_BEARER_TOKEN" | jq -r '.retro.action_items' | jq -r 'map(select(.done == false))' | jq -r 'map({id,description})| .[] | @base64')
 
