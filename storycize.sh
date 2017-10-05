@@ -16,5 +16,5 @@ for item in $(echo ${items}); do
 
   story_id=$(echo ${item} | base64 --decode | jq -r '.id')
   echo "Finishing action item '$story' in Postfacto"
-  curl "https://retro-api.cfapps.io/retros/oslo/action_items/$story_id" -X PATCH -H "authorization: Bearer $PF_BEARER_TOKEN" -H 'Content-Type: application/json' -H 'accept: application/json' --data-binary '{"done":true}' --compressed
+  curl "https://retro-api.cfapps.io/retros/$PF_RETRO_NAME/action_items/$story_id" -X PATCH -H "authorization: Bearer $PF_BEARER_TOKEN" -H 'Content-Type: application/json' -H 'accept: application/json' --data-binary '{"done":true}' --compressed
 done
