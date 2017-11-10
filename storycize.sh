@@ -7,7 +7,7 @@ set -e
 [ -z "$TRACKER_PROJECT_ID" ] && echo 'Please set the tracker project id ($TRACKER_PROJECT_ID)' && exit 1
 [ -z "$TRACKER_API_TOKEN" ] && echo 'Please set the retro name ($TRACKER_API_TOKEN)' && exit 1
 
-items=$(curl "https://retro-api.cfapps.io/retros/$PF_RETRO_NAME" -H "authorization: Bearer $PF_BEARER_TOKEN" | jq -r '.retro.action_items' | jq -r 'map(select(.done == false))' | jq -r 'map({id,description})| .[] | @base64')
+items=$(curl "https://felicity-api.cfapps.io/retros/$PF_RETRO_NAME" -H "authorization: Bearer $PF_BEARER_TOKEN" | jq -r '.retro.action_items' | jq -r 'map(select(.done == false))' | jq -r 'map({id,description})| .[] | @base64')
 
 for item in $(echo ${items}); do
   story=$(echo ${item} | base64 --decode | jq -r '.description')
@@ -16,5 +16,5 @@ for item in $(echo ${items}); do
 
   story_id=$(echo ${item} | base64 --decode | jq -r '.id')
   echo "Finishing action item '$story' in Postfacto"
-  curl "https://retro-api.cfapps.io/retros/$PF_RETRO_NAME/action_items/$story_id" -X PATCH -H "authorization: Bearer $PF_BEARER_TOKEN" -H 'Content-Type: application/json' -H 'accept: application/json' --data-binary '{"done":true}' --compressed
+  curl "https://felicity-api.cfapps.io/retros/$PF_RETRO_NAME/action_items/$story_id" -X PATCH -H "authorization: Bearer $PF_BEARER_TOKEN" -H 'Content-Type: application/json' -H 'accept: application/json' --data-binary '{"done":true}' --compressed
 done
