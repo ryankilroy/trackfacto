@@ -2,9 +2,7 @@ resources:
 - name: friday-night
   type: time
   source:
-    interval: 1m
-    start: 11:57 PM
-    stop: 11:59 PM
+    start: 6:00 PM
     days: [Friday]
     location: Canada/Eastern
 - name: trackfacto
